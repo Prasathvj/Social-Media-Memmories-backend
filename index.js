@@ -1,30 +1,28 @@
-import express from 'express'
-import dbConnection from './database.js';
-import postRouter from './routes/posts.js';
-import userRouter from "./routes/users.js"
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import path from 'path';
-import dotenv from 'dotenv'
-import cors from 'cors'
-
+const {dbConnection} = require('./database.js')
+const express  =require('express');
+const path  =require('path')
+const dotenv =require('dotenv')
+const cors  =require('cors')
+const postRouter = require('./routes/posts.js')
+const userRouter = require('./routes/users.js')
 //config env
 dotenv.config()
 const PORT = process.env.PORT
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+
 const app = express();
 
 //middleware 
 app.use(express.json());
 app.use(cors())
-//routers
+app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
+
 //dbconnection
 dbConnection() 
 
-app.use('/social', postRouter)
+//routers
+app.use('/social',postRouter)
 app.use('/user',userRouter)
-app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
+
 
 
  

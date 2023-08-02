@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
-import PostMessage from "../models/postsMessage.js"
-
+const mongoose = require('mongoose');
+const PostMessage = require('../models/postsMessage')
 //get all posts
-export const getPosts = async (req, res) => { 
+const getPosts = async (req, res) => { 
     try {
         const postMessages = await PostMessage.find();
                 
@@ -13,7 +12,7 @@ export const getPosts = async (req, res) => {
 }
 
 //get specific post
-export const getPost = async (req, res) => { 
+const getPost = async (req, res) => { 
     const { id } = req.params;
 
     try {
@@ -25,7 +24,7 @@ export const getPost = async (req, res) => {
     }
 }
 //create new post
-export const createPost = async(req, res)=>{
+const createPost = async(req, res)=>{
     try {
         let images = [];
        
@@ -50,7 +49,7 @@ export const createPost = async(req, res)=>{
 }
 
 //update post
-export const updatePost = async(req,res)=>{
+const updatePost = async(req,res)=>{
     const {id} = req.params 
     const { title, message, creator, selectedFile, tags } = req.body;
     try {
@@ -72,7 +71,7 @@ export const updatePost = async(req,res)=>{
   
 //delete post 
 
-export const deletePost = async()=>{
+const deletePost = async()=>{
     const {id} = req.params
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -88,7 +87,7 @@ export const deletePost = async()=>{
 }
 
 //like post
-export const likePost = async (req, res) => {
+const likePost = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
@@ -102,7 +101,7 @@ export const likePost = async (req, res) => {
 
 //post comment
 
-export const writeComment = async(req, res)=>{
+const writeComment = async(req, res)=>{
     const  { postId,  comment } = req.body;
 
     const review = {
@@ -133,3 +132,5 @@ export const writeComment = async(req, res)=>{
       }
 
 }
+
+module.exports = {getPosts, getPost, createPost, updatePost,likePost,writeComment,deletePost}

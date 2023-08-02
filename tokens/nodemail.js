@@ -1,6 +1,6 @@
-import nodemailer from 'nodemailer'
 
-export const sendMail=(options)=>{
+const nodemailer = require('nodemailer')
+const sendMail=(options)=>{
     const transPoerter = nodemailer.createTransport({
         service:'gmail',
         auth:{
@@ -22,3 +22,5 @@ export const sendMail=(options)=>{
         return res.status(200).json({ message: 'Email sent successfully' });
     })
 }
+
+module.exports = {sendMail}

@@ -1,16 +1,13 @@
-import express from 'express';
-import { createPost, deletePost, getPost, getPosts, likePost, updatePost, writeComment } from '../controllers/posts.js';
-import multer from 'multer';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const express = require('express')
+const multer= require('multer');
+const {getPosts, createPost, getPost, updatePost, deletePost, likePost, writeComment} = require('../controllers/posts')
+const path = require('path');
+const { join } = require('path');
 
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, join(__dirname, '..', 'uploads/posts'));
+      cb(null, path.join(__dirname, '..', 'uploads/posts'));
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname);
@@ -18,7 +15,7 @@ const upload = multer({
   }),
 });
 
-console.log(__dirname);
+
 const router = express.Router();
 
 router.get('/posts',getPosts)
@@ -30,4 +27,4 @@ router.patch('/:id/likePost', likePost);
 router.post('/post/comment',writeComment)
 
 
-export default router;
+module.exports = router;

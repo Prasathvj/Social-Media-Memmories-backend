@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import dotenv from 'dotenv'
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config()
 const MongoURL = process.env.MongoURL
 const dbConnection = ()=>{
@@ -14,4 +14,4 @@ const dbConnection = ()=>{
         console.log(error)
     }
 }
-export default dbConnection; 
+module.exports = {dbConnection}

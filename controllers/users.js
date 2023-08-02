@@ -1,11 +1,11 @@
-import User from "../models/userModel.js"
-import bcrypt from 'bcrypt';
-import { generateJwtToken, getResetToken } from "../tokens/jwt.js";
-import { sendMail } from "../tokens/nodemail.js";
-import crypto from 'crypto'
- 
+const  User  = require("../models/userModel")
+const bcrypt = require('bcrypt')
+const {generateJwtToken,getResetToken} = require('../tokens/jwt')
+const {sendMail} = require("../tokens/nodemail")
+
+const crypto = require('crypto')
 //user signup - /user/signup
-export const signup = async(req, res)=> {
+const signup = async(req, res)=> {
     
     try {
        let user = await User.findOne({email:req.body.email});
@@ -36,7 +36,7 @@ export const signup = async(req, res)=> {
 }
 
 //user's login
-export const login =async(req, res)=>{
+const login =async(req, res)=>{
     try {
         //check email is valid
         const user = await User.findOne({email:req.body.email})
@@ -64,8 +64,7 @@ export const login =async(req, res)=>{
 }
 
 //user's forgot password
-
-export const forgotPassword = async(req, res)=>{
+const forgotPassword = async(req, res)=>{
     try {
         const user = await User.findOne({email:req.body.email});
         if(!user){
@@ -106,7 +105,7 @@ export const forgotPassword = async(req, res)=>{
 
 //user's reset paassword
 
-export const resetPassword = async(req,res)=>{
+const resetPassword = async(req,res)=>{
     try {
          const resetToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
          const user = await User.findOne({
@@ -140,3 +139,5 @@ export const resetPassword = async(req,res)=>{
     }
    
 }
+
+module.exports = {login, signup, forgotPassword, resetPassword};
