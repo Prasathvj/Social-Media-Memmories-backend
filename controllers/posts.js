@@ -31,7 +31,7 @@ export const createPost = async(req, res)=>{
 
         if (req.files.length > 0){
             req.files.forEach(file =>{
-                 let url = `http://127.0.0.1:9090/uploads/posts/${file.originalname}`
+                 let url = `https://memmories-jijy.onrender.com/uploads/posts/${file.originalname}`
                  images.push({image:url})
             })
         }
