@@ -19,12 +19,14 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 //routers
+//dbconnection
+dbConnection() 
+
 app.use('/social', postRouter)
 app.use('/user',userRouter)
 app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
 
-//dbconnection
-dbConnection() 
+
  
 //listen the server
 app.listen(PORT,()=>console.log(`server starting in localhost:${PORT}`))

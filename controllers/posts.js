@@ -28,24 +28,23 @@ export const getPost = async (req, res) => {
 export const createPost = async(req, res)=>{
     try {
         let images = [];
-
+       
         if (req.files.length > 0){
+           
             req.files.forEach(file =>{
-                 let url = `https://memmories-jijy.onrender.com/uploads/posts/${file.originalname}`
+                 let BASE_URL = `${req.protocol}://${req.get('host')}`
+                 let url = `${BASE_URL}/uploads/posts/${file.originalname}`
                  images.push({image:url})
             })
         }
        req.body.images = images
        const post = await PostMessage.create(req.body);
        return res.status(201).json({
-           success: true,
+           success: 'post created successfully',
            post
        })
-        res.status(200).json({
-            message:'post created successfully',
-            post
-        })
     } catch (error) {
+        console.log(error)
         return res.status(400).json({message:'Internal Server error'})
     }
 }
